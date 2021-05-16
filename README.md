@@ -8,6 +8,13 @@
   - Consul √
   - Nacos √
 
+  | 组件名 | 语言 | CAP | 将康服务检查 | 对外暴露接口 | SpringCloud集成 |
+  | ----- | ----- | ----- | ----- | ----- | ----- |
+  | Eureka | Java | AP | 可配置支持 | HTTP | 已集成 |
+  | Consul | Go | CP | 支持 | HTTP/DNS | 已集成 |
+  | ZooKeeper | Java | CP | 支持 | 客户端 | 已集成 |
+
+
 * 调用服务
   - Ribbon √
   - LoadBalance √
