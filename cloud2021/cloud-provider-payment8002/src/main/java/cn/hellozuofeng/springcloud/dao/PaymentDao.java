@@ -7,7 +7,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PaymentDao {
 
-    int create(Payment payment);
+    int insertPayment(Payment payment);
+
+    int deletePaymentById(@Param("id") Long id);
 
     Payment getPaymentById(@Param("id") Long id);
+
+    int updatePaymentById(Payment payment);
 }

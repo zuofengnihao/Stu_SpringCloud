@@ -12,11 +12,22 @@ public class PaymentServiceImpl implements PaymentService {
     @Autowired
     private PaymentDao paymentDao;
 
-    public int create(Payment payment) {
-        return paymentDao.create(payment);
+
+    public int insertPayment(Payment payment) {
+        return paymentDao.insertPayment(payment);
     }
 
     public Payment getPaymentById(Long id) {
         return paymentDao.getPaymentById(id);
     }
+
+    public int deletePaymentById(Long id) {
+        return paymentDao.deletePaymentById(id);
+    }
+
+    public int updatePaymentById(Payment payment) {
+        return paymentDao.updatePaymentById(payment);
+    }
+
+
 }

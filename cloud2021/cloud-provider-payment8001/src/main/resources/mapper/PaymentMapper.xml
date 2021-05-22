@@ -2,16 +2,80 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.hellozuofeng.springcloud.dao.PaymentDao">
-    <insert id="create" parameterType="Payment" useGeneratedKeys="true" keyProperty="id">
-        insert into payment(serial) values(#{serial});
-    </insert>
-    
+
     <resultMap id="BaseResultMap" type="cn.hellozuofeng.springcloud.entities.Payment">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="serial" property="serial" jdbcType="VARCHAR"/>
+        <result column="createTime" property="createTime" jdbcType="BIGINT"/>
+        <result column="updateTime" property="updateTime" jdbcType="BIGINT"/>
     </resultMap>
 
+    <sql id="table_sql">
+        id,
+        serial,
+        createTime,
+        updateTime
+    </sql>
+
     <select id="getPaymentById" parameterType="Long" resultMap="BaseResultMap">
-        select id, serial from payment where id = #{id};
+        select
+        <include refid="table_sql"/>
+        from
+            payment
+        where
+            id = #{id, jdbcType=INTEGER}
     </select>
+
+    <insert id="insertPayment" parameterType="cn.hellozuofeng.springcloud.entities.Payment" useGeneratedKeys="true" keyProperty="id">
+        insert into payment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="serial != null">
+                serial,
+            </if>
+            <if test="createTime != null">
+                createTime,
+            </if>
+            <if test="updateTime != null">
+                updateTime,
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="serial != null">
+                #{serial},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="deletePaymentById" parameterType="Long">
+        delete
+        from
+            payment
+        where
+            id = #{id, jdbcType=BIGINT}
+    </delete>
+
+    <update id="updatePaymentById" parameterType="cn.hellozuofeng.springcloud.entities.Payment">
+        update payment
+        <set>
+            <if test="serial != null">
+                serial = #{serial, jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                createTime = #{createTime, jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                updateTime = #{upateTime, jdbcType=BIGINT},
+            </if>
+        </set>
+        where
+            id = #{id, jdbcType=BIGINT}
+    </update>
+
 </mapper>

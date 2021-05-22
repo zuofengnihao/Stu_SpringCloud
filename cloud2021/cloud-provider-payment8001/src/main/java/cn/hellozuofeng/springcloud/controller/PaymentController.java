@@ -27,7 +27,7 @@ public class PaymentController {
 
     @PostMapping("/payment/create")
     public CommonResult create(@RequestBody Payment payment) {
-        int result = paymentService.create(payment);
+        int result = paymentService.insertPayment(payment);
         log.info("*** 插入结果：" + result );
         if (result > 0 ) {
             return new CommonResult(200, "server port: " + serverPort + " OK", result);
@@ -44,6 +44,18 @@ public class PaymentController {
             return new CommonResult<Payment>(200, "server port: " + serverPort + " OK", payment);
         }
         return new CommonResult(444, "server port: " + serverPort + " ERROR");
+    }
+
+    @PostMapping("payment/delete/{id}")
+    public CommonResult deletePaymentById(@PathVariable("id") Long id) {
+        paymentService.deletePaymentById(id);
+        return new CommonResult(200, "OK");
+    }
+
+    @PostMapping("payment/update")
+    public CommonResult updatePaymentById(@RequestBody Payment payment) {
+        paymentService.updatePaymentById(payment);
+        return new CommonResult(200, "OK");
     }
 
     @GetMapping("/payment/discovery")
