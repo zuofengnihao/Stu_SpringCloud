@@ -27,5 +27,5 @@ public interface PaymentService {
     CommonResult updatePaymentById(@RequestBody Payment payment);
 
     @GetMapping("/payment/discovery")
-    public Object discovery();
+    Object discovery();
 }
