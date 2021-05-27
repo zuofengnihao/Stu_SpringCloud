@@ -1,0 +1,19 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: test-nacos-consumer-server
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        enabled: false
+
+logging:
+  level:
+    cn:
+      hellozuofeng:
+        nacosdemo:
+          client:
+            ProviderClient: debug
