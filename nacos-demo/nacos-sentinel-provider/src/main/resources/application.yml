@@ -1,14 +1,14 @@
 server:
-  port: 8001
+  port: 8002
 
 spring:
   application:
-    name: test-nacos-provider-sever
+    name: test-nacos-sentinel-provider-server
   cloud:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
     sentinel:
       transport:
-        port: 80011
+        port: 80021
         dashboard: 127.0.0.1:8849
