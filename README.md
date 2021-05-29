@@ -128,113 +128,115 @@
     ```
 * 服务降级
   - Hystrix ×
-    - pom文件
-    ```java
-    <dependency>
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
-    </dependency>
-    ```
-    - application.yml
-    ```java
-    # feign消费端配置
-    feign:
-      hystrix:
-        enabled: true
-    ```
-    - 代码
-    服务端（单个降级）
-    ```java
-    // 1.
-    @EnableCircuitBreaker
-    // 2.
-    public Payment fallbackMethod(Long id) {
-        log.info("getPaymentById 服务发生降级！");
-        return null;
-    }
-    // 3.
-    @HystrixCommand(fallbackMethod = "fallbackMethod", commandProperties = {
-            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "1000")
-    })
-    public Payment getPaymentById(Long id) {
-        // 抛出异常
-        //int i = 1/0;
-        try {
-            TimeUnit.SECONDS.sleep(3);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return paymentDao.getPaymentById(id);
-    }
-    消费端（全局降级）
-    ```java
-    // 1.
-    @EnableHystrix
-    // 2.
-    public CommonResult<Payment> globalFallbackMethod() {
-        return new CommonResult<Payment>(444, "服务超时或出现异常（Global）");
-    }
-    // 3.
-    @DefaultProperties(defaultFallback = "globalFallbackMethod")
-    public class OrderClient {}
-    // 4.
-    @HystrixCommand
-    @GetMapping("/consumer/payment/get/{id}")
-    public CommonResult<Payment> getPayment(@PathVariable("id") Long id) {
-       //抛出异常
-       int i = 1 / 0;
-       return paymentService.getPaymentById(id);
-    }
-    ```
-    消费端（Feign配置降级，前提配置yml）
-    ```java
-    // 1. 前提配置yml，上面有
-    @EnableHystrix
-    // 2. 实现client服务接口
-    @Component
-    public class PaymentServiceImpl implements PaymentService {
+    - 服务降级
+      - pom文件
+      ```java
+      <dependency>
+          <groupId>org.springframework.cloud</groupId>
+          <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+      </dependency>
+      ```
+      - application.yml
+      ```java
+      # feign消费端配置
+      feign:
+        hystrix:
+          enabled: true
+      ```
+      - 代码
+      服务端（单个降级）
+      ```java
+      // 1.
+      @EnableCircuitBreaker
+      // 2.
+      public Payment fallbackMethod(Long id) {
+          log.info("getPaymentById 服务发生降级！");
+          return null;
+      }
+      // 3.
+      @HystrixCommand(fallbackMethod = "fallbackMethod", commandProperties = {
+              @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "1000")
+      })
+      public Payment getPaymentById(Long id) {
+          // 抛出异常
+          //int i = 1/0;
+          try {
+              TimeUnit.SECONDS.sleep(3);
+          } catch (Exception e) {
+              e.printStackTrace();
+          }
+          return paymentDao.getPaymentById(id);
+      }
+      消费端（全局降级）
+      ```java
+      // 1.
+      @EnableHystrix
+      // 2.
+      public CommonResult<Payment> globalFallbackMethod() {
+          return new CommonResult<Payment>(444, "服务超时或出现异常（Global）");
+      }
+      // 3.
+      @DefaultProperties(defaultFallback = "globalFallbackMethod")
+      public class OrderClient {}
+      // 4.
+      @HystrixCommand
+      @GetMapping("/consumer/payment/get/{id}")
+      public CommonResult<Payment> getPayment(@PathVariable("id") Long id) {
+        //抛出异常
+        int i = 1 / 0;
+        return paymentService.getPaymentById(id);
+      }
+      ```
+      消费端（Feign配置降级，前提配置yml）
+      ```java
+      // 1. 前提配置yml，上面有
+      @EnableHystrix
+      // 2. 实现client服务接口
+      @Component
+      public class PaymentServiceImpl implements PaymentService {
 
 
-        public CommonResult create(Payment payment) {
-            return new CommonResult(444, "create fallback");
-        }
+          public CommonResult create(Payment payment) {
+              return new CommonResult(444, "create fallback");
+          }
 
-        public CommonResult getPaymentById(Long id) {
-            return new CommonResult(444, "getPaymentById fallback");
-        }
+          public CommonResult getPaymentById(Long id) {
+              return new CommonResult(444, "getPaymentById fallback");
+          }
 
-        public CommonResult deletePaymentById(Long id) {
-            return new CommonResult(444, "deletePaymentById fallback");
-        }
+          public CommonResult deletePaymentById(Long id) {
+              return new CommonResult(444, "deletePaymentById fallback");
+          }
 
-        public CommonResult updatePaymentById(Payment payment) {
-            return new CommonResult(444, "updatePaymentById fallback");
-        }
+          public CommonResult updatePaymentById(Payment payment) {
+              return new CommonResult(444, "updatePaymentById fallback");
+          }
 
-        public Object discovery() {
-            return new CommonResult(444, "discovery fallback");
-        }
-    }
-    //3. 
-    @FeignClient(value = "CLOUD-PAYMENT-SERVICE", fallback = PaymentServiceImpl.class)
-    @Component
-    public interface PaymentService {
-      @PostMapping("/payment/create")
-      CommonResult create(@RequestBody Payment payment);
+          public Object discovery() {
+              return new CommonResult(444, "discovery fallback");
+          }
+      }
+      //3. 
+      @FeignClient(value = "CLOUD-PAYMENT-SERVICE", fallback = PaymentServiceImpl.class)
+      @Component
+      public interface PaymentService {
+        @PostMapping("/payment/create")
+        CommonResult create(@RequestBody Payment payment);
 
-      @GetMapping("/payment/get/{id}")
-      CommonResult getPaymentById(@PathVariable("id") Long id);
+        @GetMapping("/payment/get/{id}")
+        CommonResult getPaymentById(@PathVariable("id") Long id);
 
-      @PostMapping("payment/delete/{id}")
-      CommonResult deletePaymentById(@PathVariable("id") Long id);
+        @PostMapping("payment/delete/{id}")
+        CommonResult deletePaymentById(@PathVariable("id") Long id);
 
-      @PostMapping("payment/update")
-      CommonResult updatePaymentById(@RequestBody Payment payment);
+        @PostMapping("payment/update")
+        CommonResult updatePaymentById(@RequestBody Payment payment);
 
-      @GetMapping("/payment/discovery")
-      Object discovery();
-    }
-    ```
+        @GetMapping("/payment/discovery")
+        Object discovery();
+      }
+      ```
+    - 服务熔断
   - resilience4j √
   - sentienl √
 
