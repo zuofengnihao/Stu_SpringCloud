@@ -238,6 +238,37 @@
       }
       ```
     - 服务熔断
+      - 代码
+      ```java
+      @HystrixCommand(fallbackMethod = "deletePaymentByIdHandler", commandProperties = {
+              @HystrixProperty(name = "circuitBreaker.enabled", value = "true"),// 是否开启断路器
+              @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "10"),// 请求次数
+              @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "10000"),// 时间窗口期
+              @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "60")// 失败率达到多少后跳闸
+      })
+      public int deletePaymentById(Long id) {
+          if (id < 0) {
+              throw new RuntimeException("id 不能为负数");
+          }
+          return paymentDao.deletePaymentById(id);
+      }
+
+      public int deletePaymentByIdHandler(Long id) {
+          return -1;
+      }
+      ```
+    - dashboard
+    pom引入
+    ```java
+    <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-netflix-hystrix-dashboard</artifactId>
+    </dependency>
+    ```
+    代码
+    ```java
+    @EnableHystrixDashboard
+    ```
   - resilience4j √
   - sentienl √
 

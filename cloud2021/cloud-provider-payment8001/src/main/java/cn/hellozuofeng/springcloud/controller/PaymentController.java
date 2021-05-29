@@ -48,14 +48,15 @@ public class PaymentController {
 
     @PostMapping("payment/delete/{id}")
     public CommonResult deletePaymentById(@PathVariable("id") Long id) {
-        paymentService.deletePaymentById(id);
-        return new CommonResult(200, "OK");
+        int i = paymentService.deletePaymentById(id);
+        if (i == -1) return new CommonResult(444, "server port: " + serverPort + "DELETE ERROR");
+        return new CommonResult(200, "server port: " + serverPort + "OK");
     }
 
     @PostMapping("payment/update")
     public CommonResult updatePaymentById(@RequestBody Payment payment) {
         paymentService.updatePaymentById(payment);
-        return new CommonResult(200, "OK");
+        return new CommonResult(200, "server port: " + serverPort + "OK");
     }
 
     @GetMapping("/payment/discovery")

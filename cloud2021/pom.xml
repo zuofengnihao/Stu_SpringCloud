@@ -19,6 +19,7 @@
       <module>cloud-eureka-server7003</module>
     <module>cloud-consumer-feign-order80</module>
       <module>cloud-provider-hystrix-payment8001</module>
+      <module>cloud-gateway</module>
   </modules>
 
   <properties>
@@ -100,8 +101,16 @@
     </dependencies>
   </dependencyManagement>
 
-  <!--<build>
+  <build>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>8</source>
+          <target>8</target>
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
@@ -111,6 +120,6 @@
         </configuration>
       </plugin>
     </plugins>
-  </build>-->
+  </build>
 
 </project>

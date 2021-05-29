@@ -15,6 +15,9 @@ eureka:
   instance:
     instance-id: order80
 
+eureka-client:
+
+
 logging:
   level:
     cn:
