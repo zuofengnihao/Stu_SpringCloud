@@ -6,6 +6,8 @@ import cn.hellozuofeng.springcloud.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.TimeUnit;
+
 @Service
 public class PaymentServiceImpl implements PaymentService {
 
@@ -18,6 +20,11 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     public Payment getPaymentById(Long id) {
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (Exception e) {
+
+        }
         return paymentDao.getPaymentById(id);
     }
 

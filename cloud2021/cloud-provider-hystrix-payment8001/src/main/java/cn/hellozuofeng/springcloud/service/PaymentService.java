@@ -19,7 +19,8 @@ public class PaymentService {
     })
     public String payment_TimeOut(Integer id) {
         int time = 5;
-        int age = time/0;
+        //抛出异常
+        //int age = time/0;
         try {
             TimeUnit.SECONDS.sleep(time);
         } catch (InterruptedException e) {
