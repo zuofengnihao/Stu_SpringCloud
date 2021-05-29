@@ -275,7 +275,64 @@
 * 服务网关
   - Zuul ×
   - Zuul2 ×
-  - gateway √
+  - gateway √  
+    创建项目pom引入
+    ```java
+    <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-gateway</artifactId>
+    </dependency>
+    ```
+    网关在application.yml中配置
+    ```java
+    server:
+      port: 9001
+
+    spring:
+      application:
+        name: cloud-gateway
+      cloud:
+        gateway:
+          discovery:
+            locator:
+              enabled: true #开启从注册中心动态创建路由的功能，利用微服务名进行路由
+          routes:
+            - id: payment8001_get_routh
+              #uri: http://localhost:8001
+              uri: lb://CLOUD-PAYMENT-SERVICE
+              predicates:
+                - Path=/payment/get/**
+            - id: payment8001_delete_routh
+              #uri: http://localhost:8001
+              uri: lb://CLOUD-PAYMENT-SERVICE
+              predicates:
+                - Path=/payment/delete/**
+
+    eureka:
+      client:
+        register-with-eureka: true
+        fetch-registry: true
+        service-url:
+          #defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
+          defaultZone: http://localhost:7001/eureka/
+      instance:
+        instance-id: gateway9001
+    ```
+    网关在编码中配置
+    ```java
+    @Configuration
+    public class GatewayConfig {
+
+        @Bean
+        public RouteLocator routeLocator(RouteLocatorBuilder builder) {
+            RouteLocatorBuilder.Builder routes = builder.routes();
+            routes.route("test_routh", r -> r.path("/guonei").uri("https://news.baidu.com/guonei")).build();
+            return routes.build();
+        }
+    }
+    ```
+
+
 
 * 服务配置
   - Config ×
