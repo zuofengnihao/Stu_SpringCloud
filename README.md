@@ -167,6 +167,7 @@
           }
           return paymentDao.getPaymentById(id);
       }
+      ```
       消费端（全局降级）
       ```java
       // 1.
