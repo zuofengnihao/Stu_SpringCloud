@@ -1,0 +1,25 @@
+server:
+  port: 6001
+
+spring:
+  application:
+    name: cloud-config
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/zuofengnihao/springcloud-config.git
+          #搜索目录
+          search-paths:
+            - springcloud-config
+      # 读取分支
+      label: master
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      #defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
+      defaultZone: http://localhost:7001/eureka/
+  instance:
+    instance-id: config6001

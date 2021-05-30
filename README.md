@@ -331,11 +331,41 @@
         }
     }
     ```
+    多种断言请百度。  
 
+    GatewayFilter
+    ```java
+    @Component
+    public class MyGatewayFilter implements GlobalFilter, Ordered {
+        @Override
+        public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+            String name = exchange.getRequest().getQueryParams().getFirst("name");
+            if (name == null) {
+                // 拦截
+                exchange.getResponse().setStatusCode(HttpStatus.NOT_ACCEPTABLE);
+                return exchange.getResponse().setComplete();
+            }
+            // 放行
+            return chain.filter(exchange);
+        }
+
+        @Override
+        public int getOrder() {
+            return 0;
+        }
+    }
+    ```
 
 
 * 服务配置
-  - Config ×
+  - Config ×  
+    pom文件
+    ```java
+    <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-config-server</artifactId>
+    </dependency>
+    ```
   - Nacos √
 
 * 服务总线
