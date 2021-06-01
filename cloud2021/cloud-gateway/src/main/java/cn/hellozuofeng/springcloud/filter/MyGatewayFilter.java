@@ -12,12 +12,12 @@ import reactor.core.publisher.Mono;
 public class MyGatewayFilter implements GlobalFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        String name = exchange.getRequest().getQueryParams().getFirst("name");
+        /*String name = exchange.getRequest().getQueryParams().getFirst("name");
         if (name == null) {
             // 拦截
             exchange.getResponse().setStatusCode(HttpStatus.NOT_ACCEPTABLE);
             return exchange.getResponse().setComplete();
-        }
+        }*/
         // 放行
         return chain.filter(exchange);
     }
