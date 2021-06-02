@@ -6,8 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import java.util.concurrent.TimeUnit;
-
 /**
  * @Auther: ZuoFeng
  * @Date: 2021/6/2 10:09

@@ -1,7 +1,6 @@
 package cn.hellozuofeng.nacosdemo.server.impl;
 
 import cn.hellozuofeng.nacosdemo.server.ProviderServer;
-import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
