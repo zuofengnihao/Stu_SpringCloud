@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>nacos-provider</artifactId>
+    <artifactId>nacos-sentinel-consumer</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -17,12 +17,21 @@
     </properties>
 
     <dependencies>
+        <!-- openFeign 服务调用 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <!-- sentinel 服务降级 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+        </dependency>
         <!-- nacos-discovery nacos服务注册发现-->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -56,5 +65,7 @@
             <artifactId>swagger-models</artifactId>
             <version>1.5.22</version>
         </dependency>
+
     </dependencies>
+
 </project>

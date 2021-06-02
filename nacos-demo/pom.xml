@@ -8,10 +8,11 @@
     <artifactId>nacos-demo</artifactId>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>nacos-config</module>
         <module>nacos-provider</module>
         <module>nacos-consumer</module>
-        <module>nacos-sentinel-provider</module>
+        <module>nacos-config-provider</module>
+        <module>nacos-sentinel-consumer</module>
+        <module>nacos-sentinel-consumer-nofeign</module>
     </modules>
     <packaging>pom</packaging>
 
