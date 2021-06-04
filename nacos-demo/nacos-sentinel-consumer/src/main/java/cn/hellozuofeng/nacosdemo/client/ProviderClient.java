@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
  * @Date: 2021/6/2 15:18
  * @Description:
  */
-@FeignClient(value = "nacos-provider", fallback = ProviderClientImpl.class)
+@FeignClient(value = "nacos-provider", path = "/provider", fallback = ProviderClientImpl.class)
 public interface ProviderClient {
 
-    @GetMapping("/test/echo/{msg}")
+    @GetMapping("/echo/{msg}")
     String echo(@PathVariable("msg") String msg);
 }

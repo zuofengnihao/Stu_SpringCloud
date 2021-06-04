@@ -17,6 +17,13 @@
     </properties>
 
     <dependencies>
+
+        <!-- zipkin 服务追踪-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zipkin</artifactId>
+        </dependency>
+
         <!-- nacos-config 从nacos配置中心读取配置-->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>

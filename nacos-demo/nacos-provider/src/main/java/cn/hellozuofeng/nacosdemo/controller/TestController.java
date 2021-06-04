@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Api(tags = "生产者测试接口")
 @RestController
-@RequestMapping("/test")
+@RequestMapping("/provider")
 public class TestController {
 
     @Value("${myName}")

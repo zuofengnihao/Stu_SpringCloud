@@ -16,17 +16,25 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Api(tags = "生产者测试接口")
 @RestController
-@RequestMapping("/test")
+@RequestMapping("/provider")
 @RefreshScope
 public class TestController {
 
     @Value("${myName}")
     private String myName;
 
+    @Value("${jdbc.url}")
+    private String jdbcUrl;
+
+    @Value("${redis.url}")
+    private String redisUrl;
+
     @ApiOperation(value = "生产者回音测试")
     @GetMapping("/echo/{msg}")
     public String echo(@PathVariable("msg") String msg) {
         //int a = 1 / 0;
+        System.out.println("connect jdbc : " + jdbcUrl);
+        System.out.println("connect redis : " + redisUrl);
         return " nacos-provider echo : " + msg + " and myName is " + myName;
     }
 }

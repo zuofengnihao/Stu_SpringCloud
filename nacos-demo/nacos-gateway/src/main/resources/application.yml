@@ -1,0 +1,23 @@
+server:
+  port: 7001
+spring:
+  application:
+    name: nacos-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: nacos-consumer
+          #uri: http://127.0.0.1:9002
+          uri: lb://nacos-consumer
+          predicates:
+            - Path=/consumer/echo/**
+        - id: nacos-provider
+          # 地址写死无法负载均衡 修改为服务名 lb=loadBalance
+          #uri: http://127.0.0.1:8001
+          uri: lb://nacos-provider
+          predicates:
+            - Path=/provider/echo/**
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+

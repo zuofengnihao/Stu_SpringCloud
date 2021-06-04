@@ -10,8 +10,18 @@ spring:
         server-addr: 127.0.0.1:8848
     sentinel:
       transport:
+        # 启动该服务，会在应用程序的相应服务器上启动HTTP Server，并且该服务器将与Sentinel dashboard进行交互
         port: 9022
+        # 指定dashboard地址
         dashboard: 127.0.0.1:8849
+  zipkin:
+    base-url: http://127.0.0.1:9411
+    discovery-client-enabled: false
+    sender:
+      type: web
+  sleuth:
+    sampler:
+      probability: 1
 
 feign:
   sentinel:

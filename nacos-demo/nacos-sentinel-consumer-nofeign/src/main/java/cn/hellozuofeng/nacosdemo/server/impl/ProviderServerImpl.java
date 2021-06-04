@@ -18,6 +18,6 @@ public class ProviderServerImpl implements ProviderServer {
 
     @Override
     public String echo(String msg) {
-        return restTemplate.getForObject("http://nacos-provider/test/echo/" + msg, String.class);
+        return restTemplate.getForObject("http://nacos-provider/provider/echo/" + msg, String.class);
     }
 }

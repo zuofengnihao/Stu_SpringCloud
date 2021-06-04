@@ -13,6 +13,7 @@
         <module>nacos-config-provider</module>
         <module>nacos-sentinel-consumer</module>
         <module>nacos-sentinel-consumer-nofeign</module>
+        <module>nacos-gateway</module>
     </modules>
     <packaging>pom</packaging>
 
